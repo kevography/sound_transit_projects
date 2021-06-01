@@ -1,0 +1,158 @@
+html, body, #map {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Titillium Web', serif;
+}
+
+#info {
+  z-index: 1000;
+  position: fixed;
+  width: 500px;
+  top: 1%;
+  bottom: 1%;
+  left: .5%;
+  padding: 5px 10px 20px 10px;
+  background: #343a40;
+  color: white;
+  overflow:auto;
+
+}
+.legend {
+  width: 50%;
+  text-align: center;
+  padding: 0px 0px 0px 0px;
+}
+
+
+@media only screen and (max-width: 1026px) {
+  #info {
+    width: 0;
+    height: 0;
+    visibility: hidden !important;
+  }
+
+  #info * {
+    width: 0;
+    height: 0;
+    visibility: hidden !important;
+  }
+}
+
+/* social media icons */
+#info a {
+  color: lightgray;
+}
+
+#info a:hover {
+  color: white;
+  opacity: 0.3;
+}
+
+#info h4 i {
+  font-size: 1.25e;
+  padding-right: 10px
+}
+
+
+#title {
+  font-size: 48px;
+  font-family: 'Oswald', sans-serif;
+}
+
+/* social media icons */
+/*#title span {
+  font-size: 14px;
+  float: right;
+  margin-right: 10px;
+}*/
+
+#socialmediaicons {
+  font-size: 20px;
+}
+
+#placename {
+  font-size: 35px;
+  font-family: 'Oswald', sans-serif;
+}
+#totalvotes {
+  font-size: 28px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: bold;
+}
+/* card decks */
+.desc {
+  text-align: left;
+  color: lightgray;
+  font-size: 23px;
+
+}
+
+.county-count {
+  margin:0;
+  text-align: left;
+
+  font-size: 40px;
+}
+
+
+
+#county-chart {
+  top: 20px;
+}
+
+/* bar chart */
+text {
+  fill: gray
+}
+
+.tick line {
+  stroke: gray;
+}
+
+.c3-axis path {
+  stroke: gray;
+}
+
+.name, .value {
+  background-color: black;
+  color: black
+}
+
+.about {
+  margin-top: 50px;
+  margin-right: 10px;
+  font-size: 17px;
+  line-height: 150%;
+  color: white;
+  text-align: justify;
+  text-justify: inter-character;
+}
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+  background-color: darkgray;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: center;
+  font-size: 24px;
+  font-family: 'Oswald', sans-serif;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+  background-color: #ccc;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+  padding: 0 18px;
+  background-color: #343A40;
+  display: none;
+  overflow: hidden;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sound Transit Projects</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css"/>
+  <link rel="stylesheet" href="custom.css">
+</head>
+
+<body>
+  <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+  <script src="st_projects.js"></script>
+  <div id = "map"></div>
+
+
+  <script>
+    var mymap = L.map('map', {
+      center: [47.588790205633025, -122.27937198943611],
+      zoom: 11
+    });
+
+    L.tileLayer('https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=c5dfd67c55684ea2a07e84662332176f',
+    attribution: 'Map tiles by <a href="https://www.thunderforest.com/">Thunderforest</a> | Created by Kevin Chau').addTo(mymap);
+
+    var projectsLayer = L.geoJSON(projects, {
+      style: style,
+      onEachFeature: eachFeat
+    }).addTo(mymap);
+
+    function style(feature){
+      return {
+        
+      }
+    }
+  </script>
+</body>
+
+</html>
