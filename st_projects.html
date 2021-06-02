@@ -8,29 +8,77 @@
 
 <body>
   <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
-  <script src="st_projects.js"></script>
-  <div id = "map"></div>
 
+  <div id = "map"></div>
+  <script src = st_projects.js></script>
 
   <script>
     var mymap = L.map('map', {
       center: [47.588790205633025, -122.27937198943611],
-      zoom: 11
+      zoom: 11,
+      zoomControl:false,
+      detectRetina: true
     });
 
-    L.tileLayer('https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=c5dfd67c55684ea2a07e84662332176f',
-    attribution: 'Map tiles by <a href="https://www.thunderforest.com/">Thunderforest</a> | Created by Kevin Chau').addTo(mymap);
+    L.tileLayer('https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=c5dfd67c55684ea2a07e84662332176f', {
+    attribution: 'Map tiles by <a href="https://www.thunderforest.com/">Thunderforest</a> | Created by Kevin Chau'}).addTo(mymap);
 
-    var projectsLayer = L.geoJSON(projects, {
+/*    var projectsLayer = L.geoJSON(projects, {
       style: style,
-      onEachFeature: eachFeat
+      onEachFeature: onEachFeature
     }).addTo(mymap);
-
+*/
     function style(feature){
       return {
-        
+        radius: 8,
+        color: setColor(feature.properties.status),
+        fillColor: setColor(feature.properties.status),
+        weight: 3,
+        opacity: 0.7,
+        fillOpacity: 0.5
       }
     }
+    function setColor(status){
+      var c = '';
+      if(status == "Fully Operational") {c = "#0F544D"}
+      else if (status == "Construction") {c = "#F75B00"}
+      else {c ="#464040"}
+      return c;
+    }
+    function onEachFeature(feature,layer){
+      layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight
+      });
+      layer.bindPopup(feature.properties.name + " " + feature.properties.type +
+      "<br>Phase: " + feature.properties.status + "<br>" +
+      feature.properties.link);
+
+    }
+    function highlightFeature(e) {
+      var feature = e.target;
+      feature.setStyle({
+        opacity: 1,
+        fillOpacity: 0.8
+      });
+      feature.openPopup();
+    }
+
+    function resetHighlight(e) {
+      projectsLayer.resetStyle(e.target);
+      e.target.closePopup();
+    }
+
+
+    function ptl(feature, latlng) {
+      return L.circleMarker(latlng);
+    }
+    var projectsLayer = L.geoJSON(projects, {
+      style: style,
+      pointToLayer: ptl,
+      onEachFeature: onEachFeature
+    }).addTo(mymap);
+
   </script>
 </body>
 
