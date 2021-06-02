@@ -52,7 +52,7 @@
       });
       layer.bindPopup(feature.properties.name + " " + feature.properties.type +
       "<br>Phase: " + feature.properties.status + "<br>" +
-      feature.properties.link);
+      feature.properties.link, {autoPan: false});
 
     }
     function highlightFeature(e) {
