@@ -12,6 +12,21 @@
   <div id = "map"></div>
   <script src = st_projects.js></script>
 
+  <div id="info">
+    <div id="title">Sound Transit Projects - Link Light Rail</div>
+    <div class="panel">
+      <p class="about">This map tracks current Link Light Rail projects
+      by Sound Transit in the Seattle Area. It is meant as a tool for both
+      residents and city planners to keep track of existing projects' statuses.
+      The basemap used here is Thunderforest's Atlas map because I liked how
+      simple the basemap with how it provided ample geographic context while
+      not distracting from the main information. The primary functions used
+      here added popups to the features displaying their station, status, a link
+      to the project on Sound Transit's website and
+      if they exist as an offshoot to an existing project that project's name.
+    </p>
+    </div>
+  </div>
   <script>
     var mymap = L.map('map', {
       center: [47.588790205633025, -122.27937198943611],
@@ -42,7 +57,7 @@
       var c = '';
       if(status == "Fully Operational") {c = "#0F544D"}
       else if (status == "Construction") {c = "#F75B00"}
-      else {c ="#464040"}
+      else {c ="#811401"}
       return c;
     }
     function onEachFeature(feature,layer){
@@ -50,9 +65,14 @@
         mouseover: highlightFeature,
         mouseout: resetHighlight
       });
-      layer.bindPopup(feature.properties.name + " " + feature.properties.type +
-      "<br>Phase: " + feature.properties.status + "<br>" +
-      feature.properties.link, {autoPan: false});
+      if(feature.properties.link && feature.properties.project){
+        layer.bindPopup("<a href="+ feature.properties.link + ">"+feature.properties.name + " " + feature.properties.type +
+        "</a><br>Phase: " + feature.properties.status + "<br>Project: " +
+        feature.properties.project, {autoPan: false});
+      } else {
+        layer.bindPopup(feature.properties.name + " " + feature.properties.type +
+        "</a><br>Phase: " + feature.properties.status, {autoPan: false});
+      }
 
     }
     function highlightFeature(e) {
@@ -78,6 +98,41 @@
       pointToLayer: ptl,
       onEachFeature: onEachFeature
     }).addTo(mymap);
+
+    var legend = L.control({position: 'topright' });
+
+    legend.onAdd = function () {
+
+    // Create Div Element and Populate it with HTML
+    var div = L.DomUtil.create('div', 'legend');
+      div.innerHTML += '<b>Project Phase</b><br />';
+      div.innerHTML += '<i style="background: #0F544D; opacity: 1"></i><p> Fully Operational </p>';
+      div.innerHTML += '<i style="background: #F75B00; opacity: 1"></i><p> Under Construction </p>';
+      div.innerHTML += '<i style="background: #811401; opacity: 1"></i><p> Planning </p>';
+      /*
+      div.innerHTML += '<i style="background: ' + colors[1] + '; opacity: 0.5"></i><p> 3-11 </p>';
+      div.innerHTML += '<i style="background: ' + colors[0] + '; opacity: 0.5"></i><p> 0-2 </p>';
+      div.innerHTML += '<hr><b>Company<b><br />';
+      div.innerHTML += '<i class="fa fa-signal marker-color-1"></i><p> AT&T </p>';
+      div.innerHTML += '<i class="fa fa-signal marker-color-2"></i><p> Eastern Sub-RSA </p>';
+      div.innerHTML += '<i class="fa fa-signal marker-color-3"></i><p> McDaniel </p>';
+      div.innerHTML += '<i class="fa fa-signal marker-color-4"></i><p> New Cingular </p>';
+      div.innerHTML += '<i class="fa fa-signal marker-color-5"></i><p> Oregon RSA </p>';
+      div.innerHTML += '<i class="fa fa-signal marker-color-6"></i><p> RCC Minnesota </p>';
+      div.innerHTML += '<i class="fa fa-signal marker-color-7"></i><p> Seattle SMSA </p>';
+      div.innerHTML += '<i class="fa fa-signal marker-color-8"></i><p> US Cellular - Richland </p>';
+      div.innerHTML += '<i class="fa fa-signal marker-color-9"></i><p> US Cellular -Washington </p>';
+      div.innerHTML += '<i class="fa fa-signal marker-color-10"></i><p> Verizon </p>';
+      div.innerHTML += '<i class="fa fa-signal marker-color-11"></i><p> Washington RSA </p>';
+      div.innerHTML += '<i class="fa fa-signal marker-color-12"></i><p> Western Sub-RSA </p>';
+      div.innerHTML += '<i class="fa fa-signal marker-color-13"></i><p> Yakima </p>';
+      // Return the Legend div containing the HTML content
+      */
+      return div;
+    };
+
+// 11. Add a legend to map
+legend.addTo(mymap);
 
   </script>
 </body>
